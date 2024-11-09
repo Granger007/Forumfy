@@ -1,7 +1,7 @@
 import Post from "./Post";
 import PostSkeleton from "../skeletons/PostSkeleton";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Posts = ({ feedType, username, userId }) => {
 	const getPostEndpoint = () => {
@@ -20,6 +20,7 @@ const Posts = ({ feedType, username, userId }) => {
 	};
 
 	const POST_ENDPOINT = getPostEndpoint();
+	const s = (new URLSearchParams(window.location.search)).get("search") || ""
 
 	const {
 		data: posts,
@@ -31,8 +32,14 @@ const Posts = ({ feedType, username, userId }) => {
 		queryFn: async () => {
 			try {
 				const res = await fetch(POST_ENDPOINT);
-				const data = await res.json();
-
+				var data = await res.json();
+				console.log(data)
+				if(s) {
+					function check(d){
+						return d.text.toLower().includes(s) || d.user.username.toLower().includes(s)
+					}
+					data = data.filter(d)	
+				}
 				if (!res.ok) {
 					throw new Error(data.error || "Something went wrong");
 				}

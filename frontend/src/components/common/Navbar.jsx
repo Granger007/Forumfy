@@ -2,10 +2,21 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import useFollow from "../../hooks/useFollow";
 import LoadingSpinner from "./LoadingSpinner";
+import {useNavigate} from 'react-router-dom'
 
 export default function Navbar() {
     const [hoveredButton, setHoveredButton] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const queryParams = new URLSearchParams(window.location.search)
+    const [search, setSearch] = useState(queryParams.get("search") || "")
+
+    const nav = useNavigate()
+
+    const sub = () => {
+        console.log(search)
+        const url = `/?${new URLSearchParams({search: search}).toString()}`
+        nav(url)
+    }
 
     const toggleDarkMode = () => {
         setIsDarkMode(!isDarkMode);
@@ -33,17 +44,19 @@ export default function Navbar() {
                         <input
                             type="search"
                             placeholder="Search"
+                            value={search}
+                            onChange={(e) => {setSearch(e.target.value)}}
                             aria-label="Search"
                             className="form-input w-full border border-gray-800 px-4 py-2 text-base focus:outline-none"
                         />
-                        <button
-                            type="submit"
-                            className={`ml-2 border border-gray-800 px-4 py-2 transition-colors ${hoveredButton ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}
+                        <div
+                            onClick={sub}
+                            className={`ml-2 border cursor-pointer border-gray-800 px-4 py-2 transition-colors ${hoveredButton ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}
                             onMouseEnter={() => setHoveredButton(true)}
                             onMouseLeave={() => setHoveredButton(false)}
                         >
                             Search
-                        </button>
+                        </div>
                     </form>
                 </div>
 
