@@ -40,7 +40,7 @@ export default function Navbar() {
 
                 {/* Centered search bar */}
                 <div className="flex flex-grow justify-center px-4">
-                    <form className="flex w-full max-w-md">
+                    <form className="flex w-full max-w-md" action={sub}>
                         <input
                             type="search"
                             placeholder="Search"

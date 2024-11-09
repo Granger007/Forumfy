@@ -2,6 +2,7 @@ import Post from "./Post";
 import PostSkeleton from "../skeletons/PostSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import {useLocation} from 'react-router-dom'
 
 const Posts = ({ feedType, username, userId }) => {
 	const getPostEndpoint = () => {
@@ -21,6 +22,7 @@ const Posts = ({ feedType, username, userId }) => {
 
 	const POST_ENDPOINT = getPostEndpoint();
 	const s = (new URLSearchParams(window.location.search)).get("search") || ""
+	let location = useLocation();
 
 	const {
 		data: posts,
@@ -33,12 +35,13 @@ const Posts = ({ feedType, username, userId }) => {
 			try {
 				const res = await fetch(POST_ENDPOINT);
 				var data = await res.json();
-				console.log(data)
+				console.log(s)
 				if(s) {
 					function check(d){
-						return d.text.toLower().includes(s) || d.user.username.toLower().includes(s)
+						console.log(d.text.toLowerCase())
+						return d.text.toLowerCase().includes(s.toLowerCase()) || d.user.username.toLowerCase().includes(s.toLowerCase())
 					}
-					data = data.filter(d)	
+					data = data.filter(check)	
 				}
 				if (!res.ok) {
 					throw new Error(data.error || "Something went wrong");
@@ -53,7 +56,8 @@ const Posts = ({ feedType, username, userId }) => {
 
 	useEffect(() => {
 		refetch();
-	}, [feedType, refetch, username]);
+	}, [feedType, refetch, username, location, s]);
+	
 
 	return (
 		<div className="flex flex-col items-center space-y-4 p-4">
