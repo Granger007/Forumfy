@@ -13,9 +13,9 @@ export default {
 			"light",
 			{
 				black: {
-					...daisyUIThemes["dim"],
+					...daisyUIThemes["garden"],
 					primary: "#1f2937",
-					secondary: "#9ca3af",
+					secondary: "#ffffff",
 
 				},
 			},
