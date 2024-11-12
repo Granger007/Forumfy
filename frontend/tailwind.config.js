@@ -10,12 +10,12 @@ export default {
 
 	daisyui: {
 		themes: [
-			"light",
+			"dark",
 			{
 				black: {
-					...daisyUIThemes["garden"],
+					...daisyUIThemes["night"],
 					primary: "#1f2937",
-					secondary: "#ffffff",
+					secondary: "#9ca3af",
 
 				},
 			},
