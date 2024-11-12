@@ -13,7 +13,7 @@ export default {
 			"dark",
 			{
 				black: {
-					...daisyUIThemes["night"],
+					...daisyUIThemes["garden"],
 					primary: "#1f2937",
 					secondary: "#9ca3af",
 
