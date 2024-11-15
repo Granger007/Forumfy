@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaRegComment } from "react-icons/fa";
 import { BiRepost } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
@@ -19,6 +19,8 @@ const Post = ({ post }) => {
   const isLiked = post.likes.includes(authUser._id);
 
   const isMyPost = authUser._id === post.user._id;
+
+  console.log(authUser)
 
   const formattedDate = formatPostDate(post.createdAt);
 
@@ -107,7 +109,7 @@ const Post = ({ post }) => {
   const { mutate: saveToCollection, isPending: isSaving } = useMutation({
     mutationFn: async () => {
       try {
-        const res = await fetch(`/api/posts/save/${post._id}`, {
+        const res = await fetch(`/api/posts/save/${post._id}/${authUser._id}`, {
           method: "POST",
         });
         const data = await res.json();
@@ -289,7 +291,9 @@ const Post = ({ post }) => {
           </div>
         </div>
         <div className='flex w-1/3 justify-end gap-2 items-center' onClick={handleSaveToCollection}>
-          <FaRegBookmark className='w-4 h-4 text-slate-500 cursor-pointer' />
+                      {
+                          authUser.savedPosts.includes(post._id) ?  <FaRegBookmark className='w-4 h-4 text-slate-500 bg-slate-900 rounded-lg  cursor-pointer' /> : <FaRegBookmark className='w-4 h-4 text-slate-500 cursor-pointer' />
+                      }
         </div>
       </div>
     </div>

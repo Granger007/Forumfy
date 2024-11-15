@@ -1,6 +1,7 @@
 import Notification from "../models/notification.model.js";
 import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
+import ObjectId from "mongodb"
 import { v2 as cloudinary } from "cloudinary";
 
 export const createPost = async (req, res) => {
@@ -199,6 +200,34 @@ export const getFollowingPosts = async (req, res) => {
 		res.status(200).json(feedPosts);
 	} catch (error) {
 		console.log("Error in getFollowingPosts controller: ", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+};
+
+export const SavePost = async (req, res) => {
+	try {
+		const { user_id, post_id } = req.params;
+		const posts = await Post.findOne({ _id: post_id })
+		if (!posts) return res.status(404).json({ error: "Post not found" });
+
+		const user = await User.findOne({_id: user_id})
+		if (!user) return res.status(404).json({ error: "User not found" });
+
+		if (user.savedPosts.includes(post_id)) {
+						const ind = user.savedPosts.indexOf(post_id);
+						user.savedPosts.splice(ind, 1);
+						await User.updateOne({ _id: user_id }, {
+										$set: { savedPosts: user.savedPosts }
+						});
+		} else {
+            await User.updateOne({ _id: user_id }, {
+                $push: { savedPosts: post_id }
+            })
+        }
+
+		res.status(200).json(posts);
+	} catch (error) {
+		console.log("Error in SavePosts controller: ", error);
 		res.status(500).json({ error: "Internal server error" });
 	}
 };
