@@ -17,11 +17,11 @@ const Post = ({ post }) => {
   const queryClient = useQueryClient();
   const postOwner = post.user;
   const isLiked = post.likes.includes(authUser._id);
+  const [likes, setLikes] = useState(post.likes)
+  
+  console.log(likes)
 
   const isMyPost = authUser._id === post.user._id;
-
-  console.log(authUser)
-
   const formattedDate = formatPostDate(post.createdAt);
 
   const { mutate: deletePost, isPending: isDeleting } = useMutation({
@@ -52,24 +52,29 @@ const Post = ({ post }) => {
         const res = await fetch(`/api/posts/like/${post._id}`, {
           method: "POST",
         });
+        
         const data = await res.json();
         if (!res.ok) {
           throw new Error(data.error || "Something went wrong");
         }
+        setLikes(data)
         return data;
       } catch (error) {
         throw new Error(error);
       }
     },
     onSuccess: (updatedLikes) => {
-      queryClient.setQueryData(["posts"], (oldData) => {
-        return oldData.map((p) => {
-          if (p._id === post._id) {
-            return { ...p, likes: updatedLikes };
+        queryClient.setQueryData(["posts"], (oldData) => {
+          if (!oldData) {
+            return [];
           }
-          return p;
+          return oldData.map((p) => {
+            if (p._id === post._id) {
+              return { ...p, likes: updatedLikes };
+            }
+            return p;
+          });
         });
-      });
     },
     onError: (error) => {
       toast.error(error.message);
@@ -277,16 +282,13 @@ const Post = ({ post }) => {
           </div>
           <div className='flex gap-1 items-center group cursor-pointer' onClick={handleLikePost}>
             {isLiking && <LoadingSpinner size='sm' />}
-            {!isLiked && !isLiking && (
-              <FaRegHeart className='w-4 h-4 cursor-pointer text-slate-500 group-hover:text-pink-500' />
-            )}
-            {isLiked && !isLiking && (
-              <FaRegHeart className='w-4 h-4 cursor-pointer text-pink-500' />
-            )}
+            {
+                likes.includes(authUser._id) ? <FaRegHeart className='w-4 h-4 cursor-pointer text-pink-500 group-hover:text-slate-500' /> : <FaRegHeart className='w-4 h-4 cursor-pointer text-slate-500 group-hover:text-pink-500' />
+            }
             <span
               className={`text-sm group-hover:text-pink-500 ${isLiked ? "text-pink-500" : "text-slate-500"}`}
             >
-              {post.likes.length}
+              {likes.length}
             </span>
           </div>
         </div>
