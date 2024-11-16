@@ -31,7 +31,7 @@ const RightPanel = () => {
 	return (
 		<div className='hidden lg:block my-4 mx-2'>
 			<div  className='p-4 rounded-md sticky top-32 bg-primary'>
-				<p className='font-bold'>You may know</p>
+				<p className='font-bold text-secondary color-primary'>You may know</p>
 				<div className='flex flex-col gap-4'>
 					{/* item */}
 					{isLoading && (
