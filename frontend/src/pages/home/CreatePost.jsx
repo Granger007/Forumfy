@@ -111,7 +111,7 @@ const CreatePost = () => {
 						/>
 					</div>
 					<input type='file' accept='image/*' hidden ref={imgRef} onChange={handleImgChange} />
-					<button className='btn btn-secondary rounded-full btn-sm text-white px-4'>
+					<button className='btn btn-primary rounded-full btn-sm text-secondary px-4'>
 						{isPending ? "Posting..." : "Post"}
 					</button>
 				</div>
