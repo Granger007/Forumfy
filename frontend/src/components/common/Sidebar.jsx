@@ -59,6 +59,12 @@ const Sidebar = () => {
 							<span className="text-lg hidden md:block">Notifications</span>
 						</Link>
 					</li>
+					<li className="flex justify-center md:justify-start">
+						<Link to="/trending" className="flex gap-3 items-center hover:bg-stone-900 transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer">
+							<IoTrendingUp className="w-6 h-6 text-secondary" />
+							<span className="text-lg text-secondary hidden md:block">Trending</span>
+						</Link>
+					</li>
 					{authUser && (
 						<li className="flex justify-center md:justify-start">
 							<Link to={`/profile/${authUser.username}`} className="flex gap-3 items-center hover:bg-stone-900 transition-all rounded-full duration-300 py-2 pl-2 pr-4 max-w-fit cursor-pointer">
@@ -84,7 +90,7 @@ const Sidebar = () => {
 								<p className="text-slate-500 text-sm">@{authUser?.username}</p>
 							</div>
 							<BiLogOut
-								className="w-5 h-5 cursor-pointer"
+								className="w-5 h-5 text-secondary cursor-pointer"
 								onClick={(e) => {
 									e.preventDefault();
 									logout(); // Trigger the logout mutation
