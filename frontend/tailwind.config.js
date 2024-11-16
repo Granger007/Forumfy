@@ -15,7 +15,7 @@ export default {
 				black: {
 					...daisyUIThemes["garden"],
 					primary: "#1f2937",
-					secondary: "#9ca3af",
+					secondary: "white",
 
 				},
 			},
