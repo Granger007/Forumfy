@@ -81,7 +81,7 @@ const NotificationPage = () => {
 				{notifications?.map((notification) => (
 					<div className='border-b border-gray-700 w-full' key={notification._id}>
 						<div className='flex gap-2 p-4 items-center'>
-							{notification.type === "follow" && <FaUser className='w-7 h-7 text-primary' />}
+							{notification.type === "follow" && <FaUser className='w-7 h-7 text-secondary' />}
 							{notification.type === "like" && <FaHeart className='w-7 h-7 text-red-500' />}
 							<Link to={`/profile/${notification.from.username}`} className='flex items-center gap-2'>
 								<div className='avatar'>
