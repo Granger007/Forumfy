@@ -225,6 +225,57 @@ const Post = ({ post }) => {
           </div>
         </div>
       </div>
+
+      {/* Comments Modal */}
+      <dialog id={`comments_modal${post._id}`} className="modal border-none outline-none">
+        <div className="modal-box rounded border border-gray-600">
+          <h3 className="font-bold text-lg mb-4">COMMENTS</h3>
+          <div className="flex flex-col gap-3 max-h-60 overflow-auto">
+            {post.comments.length === 0 && (
+              <p className="text-sm text-slate-500">
+                No comments yet 🤔 Be the first one 😉
+              </p>
+            )}
+            {post.comments.map((comment) => (
+              <div key={comment._id} className="flex gap-2 items-start">
+                <div className="avatar">
+                  <div className="w-8 rounded-full">
+                    <img
+                      src={comment.user.profileImg || "/avatar-placeholder.png"}
+                      alt="Profile"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-1">
+                    <span className="font-bold">{comment.user.fullName}</span>
+                    <span className="text-gray-700 text-sm">@{comment.user.username}</span>
+                  </div>
+                  <span>{comment.text}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 flex gap-2">
+            <textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Write your comment..."
+              className="textarea textarea-bordered w-full max-w-xs"
+            />
+            <button
+              className="btn btn-primary"
+              onClick={handlePostComment}
+              disabled={isCommenting || comment.trim() === ""}
+            >
+              {isCommenting ? "Posting..." : "Post"}
+            </button>
+          </div>
+          <div className="modal-action">
+            <button className="btn" onClick={() => document.getElementById(`comments_modal${post._id}`).close()}>Close</button>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
