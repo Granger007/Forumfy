@@ -70,17 +70,11 @@ npm install
 
 Environment Variables
 Create a .env file inside the /server directory and add the following:
-
-ini
-Copy
-Edit
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
+
 Running the App
-bash
-Copy
-Edit
 # Start the backend server
 cd server
 npm start
@@ -93,9 +87,7 @@ Frontend: http://localhost:3000
 Backend/API: http://localhost:5000
 
 📂 Project Structure
-bash
-Copy
-Edit
+
 Forumfy/
 ├── client/               # React frontend
 │   └── ...
