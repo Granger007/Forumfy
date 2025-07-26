@@ -1,6 +1,6 @@
 # ForumFy
 
-A full-stack social media platform built using **React.js**, **Node.js**, **Express.js**, and **MongoDB**, with real-time updates via **WebSockets**. ForumFy allows users to upload posts, comment, react, follow/unfollow others, and receive friend recommendations based on shared interests. It craftily eliminates the need for multiple social platforms but capturing the major fancies of Pinterest , Reddit , while retaining a minimalist UI and simplicity.
+A full-stack social media platform built using **React.js**, **Node.js**, **Express.js**, and **MongoDB**, with real-time updates via **WebSockets**. ForumFy allows users to upload posts, comment, react, follow/unfollow others, and receive friend recommendations based on shared interests. It craftily eliminates the need for multiple social platforms by capturing the major fancies of Pinterest , Reddit , while retaining a minimalist UI and simplicity.
 
 ## 🚀 Features
 
